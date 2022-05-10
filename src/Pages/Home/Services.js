@@ -4,6 +4,7 @@ import cavity from '../../assets/images/cavity.png';
 import whitening from '../../assets/images/whitening.png';
 import treatment from '../../assets/images/treatment.png';
 import ServicesCard from './ServicesCard';
+import PrimaryButton from '../Shared/PrimaryButton';
 
 const Services = () => {
   const services = [
@@ -67,9 +68,7 @@ const Services = () => {
               publishing packages and web page
             </p>
             <div className="card-actions ">
-              <button className="btn btn-primary bg-gradient-to-r from-secondary to-primary font-bold text-white">
-                Get Started
-              </button>
+              <PrimaryButton>Get Started</PrimaryButton>
             </div>
           </div>
         </div>
