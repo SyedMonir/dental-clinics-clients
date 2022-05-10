@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <>
       <div
-        className="hero min-h-screen px-12"
+        className="hero min-h-screen lg:px-12 "
         style={{ backgroundImage: `url(${background})` }}
       >
         <div className="hero-content flex-col lg:flex-row-reverse">
@@ -22,7 +22,7 @@ const Banner = () => {
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
               et a id nisi.
             </p>
-            <button className="btn btn-primary bg-gradient-to-r from-secondary to-primary  font-bold text-white">
+            <button className="btn btn-primary bg-gradient-to-r from-secondary to-primary font-bold text-white">
               Get Started
             </button>
           </div>

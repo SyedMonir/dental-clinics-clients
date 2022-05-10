@@ -26,7 +26,7 @@ const Navbar = () => {
   );
   return (
     <>
-      <nav className="navbar bg-base-100 justify-between shadow-lg uppercase">
+      <nav className="navbar sticky top-0 z-10 bg-base-100 justify-between shadow-lg uppercase px-12">
         {/* For Mobile */}
         <div className="navbar-start">
           <div className="dropdown">
