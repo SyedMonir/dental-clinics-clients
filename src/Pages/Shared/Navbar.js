@@ -26,7 +26,7 @@ const Navbar = () => {
   );
   return (
     <>
-      <nav className="navbar bg-base-100 justify-between">
+      <nav className="navbar bg-base-100 justify-between shadow-lg uppercase">
         {/* For Mobile */}
         <div className="navbar-start">
           <div className="dropdown">
