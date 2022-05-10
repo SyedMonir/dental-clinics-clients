@@ -4,9 +4,9 @@ const InfoCard = ({ img, title, description, bgColor }) => {
   return (
     <>
       <div
-        className={`card lg:card-side bg-base-100 shadow-xl text-white m-4 p-4 ${bgColor}`}
+        className={`card lg:card-side shadow-xl text-white m-4 p-4 ${bgColor}`}
       >
-        <figure>
+        <figure className="px-2">
           <img src={img} alt={title} />
         </figure>
         <div className="card-body">
