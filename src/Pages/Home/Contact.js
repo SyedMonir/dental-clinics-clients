@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <>
       <section
-        className="text-white flex justify-center items-center mb-12 mt-40"
+        className="text-white flex justify-center items-center mt-40"
         style={{
           background: `url(${appointment})`,
           backgroundSize: 'cover',
@@ -23,7 +23,7 @@ const Contact = () => {
                 {/* Email */}
                 <div className="p-2 w-full">
                   <div className="relative">
-                    <label for="email" className="leading-7 text-sm ">
+                    <label htmlFor="email" className="leading-7 text-sm ">
                       Email
                     </label>
                     <input
@@ -38,7 +38,7 @@ const Contact = () => {
                 {/* Subject */}
                 <div className="p-2 w-full">
                   <div className="relative">
-                    <label for="name" className="leading-7 text-sm ">
+                    <label htmlFor="name" className="leading-7 text-sm ">
                       Subject
                     </label>
                     <input
@@ -52,7 +52,7 @@ const Contact = () => {
                 {/* Message */}
                 <div className="p-2 w-full">
                   <div className="relative">
-                    <label for="message" className="leading-7 text-sm ">
+                    <label htmlFor="message" className="leading-7 text-sm ">
                       Message
                     </label>
                     <textarea
