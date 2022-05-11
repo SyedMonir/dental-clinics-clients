@@ -3,6 +3,7 @@ import React from 'react';
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
   const { _id, name, slots } = treatment;
+  const selectedDate = date ? date : new Date();
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             <input
               type="text"
               disabled
-              value={format(date, 'PP')}
+              value={format(selectedDate, 'PP')}
               className="input input-bordered w-full max-w-xs"
             />
             <select
