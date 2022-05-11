@@ -6,12 +6,11 @@ import ContactUs from './Pages/ContactUs/ContactUs';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Reviews from './Pages/Reviews/Reviews';
-import Footer from './Pages/Shared/Footer';
 import Navbar from './Pages/Shared/Navbar';
 
 function App() {
   return (
-    <>
+    <section className="max-w-[1400px] mx-auto">
       <Navbar />
       <main>
         <Routes>
@@ -24,8 +23,7 @@ function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
-      <Footer />
-    </>
+    </section>
   );
 }
 
