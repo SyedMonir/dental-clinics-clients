@@ -1,15 +1,17 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import AppointmentCard from './AppointmentCard';
+import BookingModal from './BookingModal';
 
 const AvailableAppointments = ({ date }) => {
   const [appointments, setAppointment] = useState([]);
+  const [treatment, setTreatment] = useState(null);
   useEffect(() => {
     fetch('appointment.json')
       .then((res) => res.json())
       .then((data) => setAppointment(data));
   }, []);
-  console.log(appointments);
+  //   console.log(appointments);
   return (
     <section className="px-12">
       <h3 className="text-xl text-secondary text-center my-8">
@@ -20,8 +22,16 @@ const AvailableAppointments = ({ date }) => {
           <AppointmentCard
             key={appointment._id}
             appointment={appointment}
+            setTreatment={setTreatment}
           ></AppointmentCard>
         ))}
+        {treatment && (
+          <BookingModal
+            treatment={treatment}
+            date={date}
+            setTreatment={setTreatment}
+          />
+        )}
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 // import PrimaryButton from '../Shared/PrimaryButton';
 
-const AppointmentCard = ({ appointment }) => {
+const AppointmentCard = ({ appointment, setTreatment }) => {
   const { name, slots } = appointment;
   const slotsLength = slots?.length;
   return (
@@ -21,13 +21,14 @@ const AppointmentCard = ({ appointment }) => {
             {slotsLength > 1 ? 'Appointments' : 'Appointment'} Available
           </p>
           <div className="card-actions justify-end">
-            {/* <PrimaryButton>Book Appointment</PrimaryButton> */}
-            <button
+            <label
+              onClick={() => setTreatment(appointment)}
               disabled={slotsLength === 0}
+              htmlFor="booking-modal"
               className="btn btn-primary bg-gradient-to-r from-secondary to-primary font-bold text-white"
             >
               Book Appointment
-            </button>
+            </label>
           </div>
         </div>
       </div>
