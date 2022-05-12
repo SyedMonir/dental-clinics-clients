@@ -37,7 +37,7 @@ const Login = () => {
 
   // User
   if (user || googleUser) {
-    console.log(user || googleUser);
+    // console.log(user || googleUser);
   }
 
   const onSubmit = (data) => {

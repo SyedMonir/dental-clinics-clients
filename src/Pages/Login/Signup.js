@@ -2,36 +2,45 @@ import React from 'react';
 import {
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   // Hook Form
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
   // Email & Password
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
+
+  // Update User
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
   // Google
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
 
   // Error
   let signUpError;
-  if (error || googleError) {
-    console.log('object');
+  if (error || googleError || updateError) {
     // console.log(error || googleError);
-    signUpError = <>{error?.message || googleError?.message}</>;
+    signUpError = (
+      <>{error?.message || googleError?.message || updateError?.message}</>
+    );
   }
 
   // Loading
-  if (loading || googleLoading) {
+  if (loading || googleLoading || updating) {
     return <Loading />;
   }
 
@@ -40,9 +49,11 @@ const Signup = () => {
     // console.log(user || googleUser);
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    createUserWithEmailAndPassword(data.email, data.password);
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    navigate('/appointment');
   };
   return (
     <>
