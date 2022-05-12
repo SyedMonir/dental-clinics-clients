@@ -1,5 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+// Skeleton CSS
+import 'react-loading-skeleton/dist/skeleton.css';
+
 import About from './Pages/About/About';
 import Appointment from './Pages/Appointment/Appointment';
 import ContactUs from './Pages/ContactUs/ContactUs';
