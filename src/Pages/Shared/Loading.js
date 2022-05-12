@@ -5,17 +5,15 @@ const Loading = () => {
   return (
     <>
       <section className="flex flex-col justify-center items-center h-[80vh]">
-        {/* Spinner 1 */}
-        <button className="btn loading mb-4 ">loading</button>
         {/* Spinner 2 */}
         <div className="w-1/2 max-w-sm">
           <Skeleton count={5} />
         </div>
-        {/* Spinner 3 */}
-        <div class="flex items-center justify-center space-x-2 animate-pulse mt-4">
-          <div class="w-8 h-8 bg-secondary rounded-full"></div>
-          <div class="w-8 h-8 bg-secondary rounded-full"></div>
-          <div class="w-8 h-8 bg-secondary rounded-full"></div>
+        {/* Spinner 4 */}
+        <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-800 opacity-75 flex flex-col items-center justify-center">
+          <button className="btn loading bg-secondary mb-4 text-white text-xl font-semibold">
+            loading. . .
+          </button>
         </div>
       </section>
     </>

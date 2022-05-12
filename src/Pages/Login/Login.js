@@ -1,7 +1,10 @@
 import React from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
@@ -22,17 +25,14 @@ const Login = () => {
   // Error
   let signInError;
   if (error || googleError) {
-    console.log(error || googleError);
-    signInError = <p>{error?.message || googleError?.message}</p>;
+    console.log('object');
+    // console.log(error || googleError);
+    signInError = <>{error?.message || googleError?.message}</>;
   }
 
   // Loading
   if (loading || googleLoading) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
+    return <Loading />;
   }
 
   // User
@@ -119,9 +119,9 @@ const Login = () => {
             </div>
 
             {/* Showing Error */}
-            <span className="text-red-600 font-semibold text-sm text-center block mb-2">
+            <p className="text-red-600 font-semibold text-sm text-center mb-2">
               {signInError}
-            </span>
+            </p>
 
             {/* Submit Button */}
             <input
@@ -131,6 +131,12 @@ const Login = () => {
             />
           </form>
 
+          <p className="text-sm">
+            New to Dental Clients?{' '}
+            <Link className="text-secondary hover:underline" to={'/signup'}>
+              Create new account
+            </Link>{' '}
+          </p>
           <div className="divider">OR</div>
 
           {/* Gopogle */}

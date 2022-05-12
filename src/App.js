@@ -10,6 +10,7 @@ import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Reviews from './Pages/Reviews/Reviews';
 import Navbar from './Pages/Shared/Navbar';
+import Signup from './Pages/Login/Signup';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/about" element={<About />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
