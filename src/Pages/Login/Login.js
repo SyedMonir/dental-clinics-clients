@@ -4,11 +4,15 @@ import {
   useSignInWithGoogle,
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
   // Hook Form
   const {
     register,
@@ -38,6 +42,7 @@ const Login = () => {
   // User
   if (user || googleUser) {
     // console.log(user || googleUser);
+    navigate(from, { replace: true });
   }
 
   const onSubmit = (data) => {
