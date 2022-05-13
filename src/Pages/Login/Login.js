@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
@@ -26,6 +26,14 @@ const Login = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
 
+  useEffect(() => {
+    // User
+    if (user || googleUser) {
+      // console.log(user || googleUser);
+      navigate(from, { replace: true });
+    }
+  }, [user, googleUser]);
+
   // Error
   let signInError;
   if (error || googleError) {
@@ -37,12 +45,6 @@ const Login = () => {
   // Loading
   if (loading || googleLoading) {
     return <Loading />;
-  }
-
-  // User
-  if (user || googleUser) {
-    // console.log(user || googleUser);
-    navigate(from, { replace: true });
   }
 
   const onSubmit = (data) => {
