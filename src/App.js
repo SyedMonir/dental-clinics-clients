@@ -12,6 +12,7 @@ import Reviews from './Pages/Reviews/Reviews';
 import Navbar from './Pages/Shared/Navbar';
 import Signup from './Pages/Login/Signup';
 import RequireAuth from './Pages/Login/RequireAuth';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
+      <Toaster />
     </section>
   );
 }
