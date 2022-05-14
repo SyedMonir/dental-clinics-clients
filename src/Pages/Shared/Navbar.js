@@ -33,6 +33,11 @@ const Navbar = () => {
       <li>
         <Link to={'/about'}>About</Link>
       </li>
+      {user && (
+        <li>
+          <Link to={'/dashboard'}>Dashboard</Link>
+        </li>
+      )}
       <li>
         {user ? (
           <button onClick={logout} className="btn btn-ghost">
@@ -46,7 +51,7 @@ const Navbar = () => {
   );
   return (
     <>
-      <nav className="navbar sticky top-0 z-10 bg-base-100 justify-between shadow-lg uppercase px-12">
+      <nav className="navbar sticky top-0 z-50 bg-base-100 justify-between shadow-lg uppercase px-12">
         {/* For Mobile */}
         <div className="navbar-start">
           <div className="dropdown">
