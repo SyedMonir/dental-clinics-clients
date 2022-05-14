@@ -18,7 +18,7 @@ const MyAppointment = () => {
       res.json()
     )
   );
-  console.log(appointments);
+  // console.log(appointments);
 
   if (isLoading || userLoading) {
     return <Loading />;
