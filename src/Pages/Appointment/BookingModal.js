@@ -20,16 +20,18 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
   const handleBooking = (e) => {
     e.preventDefault();
 
+    const slot = e.target.slot.value;
+
     const booking = {
       treatmentId: _id,
       treatment: name,
-      date: selectedDate,
-      slot: e.target.slot.value,
+      date: format(selectedDate, 'PP'),
+      slot,
       patient: user?.email,
       patientName: user?.displayName,
       phone: e.target.phone.value,
     };
-    console.log(booking);
+    // console.log(booking);
 
     fetch(`http://localhost:5000/booking`, {
       method: 'POST',
@@ -38,10 +40,22 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // to close the modal
+        if (data.success) {
+          toast.success(
+            `Appointment is set ${format(selectedDate, 'PP')} at ${slot}`,
+            {
+              duration: 4000,
+            }
+          );
+        } else {
+          toast.error(
+            `Already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`,
+            { duration: 4000 }
+          );
+        }
         setTreatment(null);
-        toast.success('Successfully Booked!');
       });
   };
   return (
