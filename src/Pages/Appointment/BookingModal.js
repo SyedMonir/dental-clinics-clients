@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
   const { _id, name, slots } = treatment;
   const selectedDate = date ? date : new Date();
 
@@ -55,6 +55,7 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
             { duration: 4000 }
           );
         }
+        refetch();
         setTreatment(null);
       });
   };
