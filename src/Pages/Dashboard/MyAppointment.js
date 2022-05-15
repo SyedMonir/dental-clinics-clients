@@ -14,9 +14,12 @@ const MyAppointment = () => {
     error,
     data: appointments,
   } = useQuery(['bookings'], () =>
-    fetch(`http://localhost:5000/booking?patient=${user?.email}`).then((res) =>
-      res.json()
-    )
+    fetch(`http://localhost:5000/booking?patient=${user?.email}`, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    }).then((res) => res.json())
   );
   // console.log(appointments);
 

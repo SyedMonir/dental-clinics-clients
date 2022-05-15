@@ -97,7 +97,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
               type="text"
               name="text"
               disabled={true}
-              value={user?.displayName}
+              value={user?.displayName || 'Unknown'}
               className="input input-bordered w-full max-w-xs"
             />
             <input
