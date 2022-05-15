@@ -1,11 +1,14 @@
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
 const MyAppointment = () => {
   const [user, userLoading, userError] = useAuthState(auth);
+  const navigate = useNavigate();
   if (userError) {
     // console.log(error);
   }
@@ -13,13 +16,21 @@ const MyAppointment = () => {
     isLoading,
     error,
     data: appointments,
-  } = useQuery(['bookings'], () =>
+  } = useQuery(['bookings', user?.email], () =>
     fetch(`http://localhost:5000/booking?patient=${user?.email}`, {
       method: 'GET',
       headers: {
         authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
-    }).then((res) => res.json())
+    }).then((res) => {
+      // console.log(res);
+      if (res.status === 401 || res.status === 403) {
+        signOut(auth);
+        localStorage.removeItem('accessToken');
+        navigate('/');
+      }
+      return res.json();
+    })
   );
   // console.log(appointments);
 

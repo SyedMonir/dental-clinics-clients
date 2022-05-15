@@ -4,7 +4,7 @@ import axios from 'axios';
 const useToken = (user) => {
   const [token, setToken] = useState('');
   useEffect(() => {
-    console.log(user?.user);
+    // console.log(user?.user);
     const email = user?.user?.email;
     const currentUser = { email: email };
     if (email) {
@@ -14,7 +14,7 @@ const useToken = (user) => {
       axios
         .put(`http://localhost:5000/user/${email}`, currentUser, { headers })
         .then((response) => {
-          console.log(response?.data);
+          // console.log(response?.data);
           const accessToken = response?.data?.token;
           localStorage.setItem('accessToken', accessToken);
           setToken(accessToken);
