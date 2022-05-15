@@ -16,9 +16,9 @@ const AvailableAppointments = ({ date }) => {
     data: appointments,
     refetch,
   } = useQuery(['available', formattedDate], () =>
-    fetch(`http://localhost:5000/available?date=${formattedDate}`).then((res) =>
-      res.json()
-    )
+    fetch(
+      `https://dental-clinics.herokuapp.com/available?date=${formattedDate}`
+    ).then((res) => res.json())
   );
 
   if (isLoading) {

@@ -17,12 +17,15 @@ const MyAppointment = () => {
     error,
     data: appointments,
   } = useQuery(['bookings', user?.email], () =>
-    fetch(`http://localhost:5000/booking?patient=${user?.email}`, {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    }).then((res) => {
+    fetch(
+      `https://dental-clinics.herokuapp.com/booking?patient=${user?.email}`,
+      {
+        method: 'GET',
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      }
+    ).then((res) => {
       // console.log(res);
       if (res.status === 401 || res.status === 403) {
         signOut(auth);
@@ -32,6 +35,30 @@ const MyAppointment = () => {
       return res.json();
     })
   );
+
+  //   useEffect(() => {
+  //     if (user) {
+  //         fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+  //             method: 'GET',
+  //             headers: {
+  //                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+  //             }
+  //         })
+  //             .then(res => {
+  //                 console.log('res', res);
+  //                 if (res.status === 401 || res.status === 403) {
+  //                     signOut(auth);
+  //                     localStorage.removeItem('accessToken');
+  //                     navigate('/');
+  //                 }
+  //                 return res.json()
+  //             })
+  //             .then(data => {
+
+  //                 setAppointments(data);
+  //             });
+  //     }
+  // }, [user])
   // console.log(appointments);
 
   if (isLoading || userLoading) {
