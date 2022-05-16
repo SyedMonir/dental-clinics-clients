@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import {
   useCreateUserWithEmailAndPassword,
+  useSendEmailVerification,
   useSignInWithGoogle,
   useUpdateProfile,
 } from 'react-firebase-hooks/auth';
@@ -31,6 +32,9 @@ const Signup = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
 
+  const [sendEmailVerification, sending, verificationError] =
+    useSendEmailVerification(auth);
+
   const [token] = useToken(user || googleUser);
 
   useEffect(() => {
@@ -41,7 +45,7 @@ const Signup = () => {
 
   // Error
   let signUpError;
-  if (error || googleError || updateError) {
+  if (error || googleError || updateError || verificationError) {
     // console.log(error || googleError);
     signUpError = (
       <>{error?.message || googleError?.message || updateError?.message}</>
@@ -49,7 +53,7 @@ const Signup = () => {
   }
 
   // Loading
-  if (loading || googleLoading || updating) {
+  if (loading || googleLoading || updating || sending) {
     return <Loading />;
   }
 
@@ -61,6 +65,7 @@ const Signup = () => {
   const onSubmit = async (data) => {
     // console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
+    await sendEmailVerification();
     await updateProfile({ displayName: data.name });
   };
   return (

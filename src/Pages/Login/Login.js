@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
+  useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from 'react-firebase-hooks/auth';
@@ -8,8 +9,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import useToken from '../../hooks/useToken';
 import Loading from '../Shared/Loading';
+import toast from 'react-hot-toast';
 
 const Login = () => {
+  const [emailValue, setEmailValue] = useState();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
@@ -27,6 +30,20 @@ const Login = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
 
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
+
+  const resetPassword = async (e) => {
+    e.preventDefault();
+    const email = emailValue?.target?.value;
+    if (email) {
+      await sendPasswordResetEmail(email);
+      toast.success('Reset Mail Sent!');
+    } else {
+      toast.error('Enter Your Email');
+    }
+  };
+
   const [token] = useToken(user || googleUser);
 
   useEffect(() => {
@@ -39,14 +56,14 @@ const Login = () => {
 
   // Error
   let signInError;
-  if (error || googleError) {
+  if (error || googleError || resetError) {
     console.log('object');
     // console.log(error || googleError);
     signInError = <>{error?.message || googleError?.message}</>;
   }
 
   // Loading
-  if (loading || googleLoading) {
+  if (loading || googleLoading || sending) {
     return <Loading />;
   }
 
@@ -76,6 +93,9 @@ const Login = () => {
                     value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
                     message: 'Invalid Email!',
                   },
+                  onBlur: (e) => {
+                    setEmailValue(e);
+                  },
                 })}
                 type="email"
                 placeholder="Enter your email"
@@ -96,8 +116,17 @@ const Login = () => {
             </div>
             {/* Password */}
             <div className="form-control w-full max-w-xs">
+              {/* <label className="label">
+                <span className="label-text">Password:</span>
+              </label> */}
               <label className="label">
                 <span className="label-text">Password:</span>
+                <span
+                  onClick={resetPassword}
+                  className="label-text-alt hover:underline cursor-pointer"
+                >
+                  Forget Password?
+                </span>
               </label>
               <input
                 {...register('password', {
