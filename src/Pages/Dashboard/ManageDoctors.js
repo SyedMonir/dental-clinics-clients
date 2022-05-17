@@ -9,6 +9,7 @@ const ManageDoctors = () => {
     isLoading,
     error,
     data: doctors,
+    refetch,
   } = useQuery('doctors', () =>
     fetch('http://localhost:5000/doctor', {
       headers: {
@@ -40,13 +41,19 @@ const ManageDoctors = () => {
               <th>#</th>
               <th>Avatar</th>
               <th>Name</th>
+              <th>Email</th>
               <th>specialization</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {doctors?.map((doctor, index) => (
-              <DoctorRow key={doctor._id} doctor={doctor} index={index} />
+              <DoctorRow
+                key={doctor._id}
+                doctor={doctor}
+                index={index}
+                refetch={refetch}
+              />
             ))}
           </tbody>
         </table>

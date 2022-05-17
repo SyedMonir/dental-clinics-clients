@@ -19,7 +19,8 @@ const RequireAdmin = ({ children }) => {
 
   if (!user || !admin) {
     signOut(auth);
-    return <Navigate to="/login" />;
+    localStorage.removeItem('accessToken');
+    return <Navigate to="/login" replace />;
   }
 
   return children;

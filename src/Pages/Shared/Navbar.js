@@ -80,7 +80,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to={'/'} className="btn btn-ghost normal-case text-xl">
-            Clients-Portal
+            DentalClinics
           </Link>
         </div>
         {/* For Computer */}
