@@ -1,54 +1,58 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
-import UserRow from './UserRow';
+import DoctorRow from './DoctorRow';
 
-const Users = () => {
+const ManageDoctors = () => {
+  // Query
   const {
     isLoading,
     error,
-    data: users,
-    refetch,
-  } = useQuery('users', () =>
-    fetch(`https://dental-clinics.herokuapp.com/user`, {
-      method: 'GET',
+    data: doctors,
+  } = useQuery('doctors', () =>
+    fetch('http://localhost:5000/doctor', {
       headers: {
         authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     }).then((res) => res.json())
   );
+
+  //   console.log(doctors);
+
   if (isLoading) {
     return <Loading />;
   }
 
   if (error) {
-    console.log('An error has occurred: ' + error.message);
+    console.log('An error has occurred: ' + error?.message);
   }
+
   return (
-    <>
-      <h3 className="text-2xl text-center my-4">
-        Total Users: {users?.length}{' '}
-      </h3>
+    <section>
+      <h2 className="text-2xl text-center mb-8">
+        Managing Doctor :{doctors?.length}{' '}
+      </h2>
+      {/* Table */}
       <div className="overflow-x-auto mx-2">
         <table className="table table-zebra w-full table-normal">
           <thead>
             <tr>
               <th>#</th>
-              <th>Email</th>
-              <th>Date</th>
-              <th>ADMIN</th>
+              <th>Avatar</th>
+              <th>Name</th>
+              <th>specialization</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {users?.map((user) => (
-              <UserRow key={user._id} user={user} refetch={refetch} />
+            {doctors?.map((doctor, index) => (
+              <DoctorRow key={doctor._id} doctor={doctor} index={index} />
             ))}
           </tbody>
         </table>
       </div>
-    </>
+    </section>
   );
 };
 
-export default Users;
+export default ManageDoctors;

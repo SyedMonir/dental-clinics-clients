@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import useAdmin from '../../hooks/useAdmin';
@@ -36,15 +36,18 @@ const Dashboard = () => {
               <Link to={'/dashboard'}>My Appointment</Link>
             </li>
             <li>
-              <Link to={'my-review'}>My Review</Link>
+              <NavLink to={'my-review'}>My Review</NavLink>
             </li>
             {admin && (
               <>
                 <li>
-                  <Link to={'users'}>All Users</Link>
+                  <NavLink to={'users'}>All Users</NavLink>
                 </li>
                 <li>
-                  <Link to={'add-doctor'}>Add Doctor</Link>
+                  <NavLink to={'add-doctor'}>Add Doctor</NavLink>
+                </li>
+                <li>
+                  <NavLink to={'manageDoctor'}>Manage Doctor</NavLink>
                 </li>
               </>
             )}
