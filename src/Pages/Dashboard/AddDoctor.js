@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
 
@@ -9,6 +10,7 @@ const AddDoctor = () => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
 
   // Query
@@ -20,7 +22,9 @@ const AddDoctor = () => {
     fetch('http://localhost:5000/service').then((res) => res.json())
   );
 
-  if (isLoading) {
+  const [loader, setLoader] = useState(false);
+
+  if (isLoading || loader) {
     return <Loading />;
   }
 
@@ -41,7 +45,8 @@ const AddDoctor = () => {
 
   // Submit
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
+    setLoader(true);
     const image = data?.image[0];
     const formData = new FormData();
     formData.append('image', image);
@@ -62,8 +67,27 @@ const AddDoctor = () => {
             img: img,
           };
           // Send my database
+          fetch('http://localhost:5000/doctor', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+            body: JSON.stringify(doctor),
+          })
+            .then((res) => res.json())
+            .then((inserted) => {
+              // console.log('Doctor', inserted);
+              if (inserted?.insertedId) {
+                toast.success(`Added Dr. ${data?.name} successfully!`);
+                setLoader(false);
+                reset();
+              } else {
+                toast.error(`Failed to add the doctor!`);
+              }
+            });
         }
-        console.log(result);
+        // console.log(result);
       });
   };
   return (
