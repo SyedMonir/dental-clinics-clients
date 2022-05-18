@@ -19,7 +19,7 @@ const DoctorRow = ({ doctor, index, setDeletingDoctor }) => {
       <td>
         <label
           onClick={() => setDeletingDoctor(doctor)}
-          for="delete-confirm-modal"
+          htmlFor="delete-confirm-modal"
           className="btn btn-xs btn-error text-white"
         >
           Delete

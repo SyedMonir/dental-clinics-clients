@@ -6,7 +6,7 @@ import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
 const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
-  const { _id, name, slots } = treatment;
+  const { _id, name, slots, price } = treatment;
   const selectedDate = date ? date : new Date();
 
   const [user, loading, error] = useAuthState(auth);
@@ -27,6 +27,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
       treatment: name,
       date: format(selectedDate, 'PP'),
       slot,
+      price,
       patient: user?.email,
       patientName: user?.displayName,
       phone: e.target.phone.value,
@@ -44,7 +45,8 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
         // to close the modal
         if (data.success) {
           toast.success(
-            `Appointment is set ${format(selectedDate, 'PP')} at ${slot}`,
+            `Appointment is set ${format(selectedDate, 'PP')} at ${slot}! 
+            You can pay in my-appointment page.`,
             {
               duration: 4000,
             }
@@ -93,6 +95,12 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                 </option>
               ))}
             </select>
+            <input
+              type="number"
+              disabled
+              value={price}
+              className="input input-bordered w-full max-w-xs"
+            />
             <input
               type="text"
               name="text"

@@ -2,7 +2,7 @@ import React from 'react';
 // import PrimaryButton from '../Shared/PrimaryButton';
 
 const AppointmentCard = ({ appointment, setTreatment }) => {
-  const { name, slots } = appointment;
+  const { name, slots, price } = appointment;
   const slotsLength = slots?.length;
   return (
     <>
@@ -19,6 +19,10 @@ const AppointmentCard = ({ appointment, setTreatment }) => {
           <p>
             <strong className="text-secondary">{slotsLength}</strong>{' '}
             {slotsLength > 1 ? 'Appointments' : 'Appointment'} Available
+          </p>
+
+          <p>
+            Price: $ <strong className="text-secondary">{price}</strong>{' '}
           </p>
           <div className="card-actions justify-end">
             <label
