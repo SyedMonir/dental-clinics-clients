@@ -19,7 +19,9 @@ const AddDoctor = () => {
     error,
     data: services,
   } = useQuery('services', () =>
-    fetch('http://localhost:5000/service').then((res) => res.json())
+    fetch('https://dental-clinics.herokuapp.com/service').then((res) =>
+      res.json()
+    )
   );
 
   const [loader, setLoader] = useState(false);
@@ -67,7 +69,7 @@ const AddDoctor = () => {
             img: img,
           };
           // Send my database
-          fetch('http://localhost:5000/doctor', {
+          fetch('https://dental-clinics.herokuapp.com/doctor', {
             method: 'POST',
             headers: {
               'content-type': 'application/json',
