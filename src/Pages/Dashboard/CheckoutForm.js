@@ -1,19 +1,21 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useState, useEffect } from 'react';
+import Loading from '../Shared/Loading';
 
 const CheckoutForm = ({ appointment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState('');
   const [transitionId, setTransitionId] = useState('');
+  const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState('');
   const [clientSecret, setClientSecret] = useState('');
 
-  const { price, patient, patientName } = appointment;
+  const { _id, price, patient, patientName } = appointment;
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch('http://localhost:5000/create-payment-intent', {
+    fetch('https://dental-clinics.herokuapp.com/create-payment-intent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,6 +31,10 @@ const CheckoutForm = ({ appointment }) => {
         }
       });
   }, [price]);
+
+  if (processing) {
+    // return <Loading />;
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,6 +69,8 @@ const CheckoutForm = ({ appointment }) => {
       //   console.log('[PaymentMethod]', paymentMethod);
     }
 
+    setProcessing(true);
+
     // Confirm Card payment
     const { paymentIntent, error: intentError } =
       await stripe.confirmCardPayment(clientSecret, {
@@ -78,11 +86,31 @@ const CheckoutForm = ({ appointment }) => {
     if (intentError) {
       setCardError(intentError.message);
       setSuccess('');
+      setProcessing(false);
     } else {
       setCardError('');
       //   console.log('[PaymentIntent]', paymentIntent);
       setTransitionId(paymentIntent.id);
       setSuccess(`Congrats! Payment ${paymentIntent.status}`);
+
+      // Store payment in db
+      const payment = {
+        appointment: _id,
+        transitionId: paymentIntent.id,
+      };
+      fetch(`https://dental-clinics.herokuapp.com/booking/${_id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify(payment),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProcessing(false);
+          console.log(data);
+        });
     }
   };
   return (

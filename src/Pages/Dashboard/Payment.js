@@ -12,7 +12,7 @@ const stripePromise = loadStripe(
 
 const Payment = () => {
   const { id } = useParams();
-  const url = `http://localhost:5000/booking/${id}`;
+  const url = `https://dental-clinics.herokuapp.com/booking/${id}`;
 
   // Query
   const {
@@ -50,7 +50,7 @@ const Payment = () => {
                     {appointment?.patientName}
                   </span>
                 </p>
-                <h2 className="card-title">
+                <h2 className="card-title text-center">
                   Pay for{' '}
                   <span className="text-secondary">
                     {appointment?.treatment}

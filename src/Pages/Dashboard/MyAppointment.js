@@ -60,6 +60,7 @@ const MyAppointment = () => {
         })
         .then((data) => {
           setAppointments(data);
+          // console.log(data);
         });
     }
   }, [user, navigate]);
@@ -75,7 +76,7 @@ const MyAppointment = () => {
   return (
     <>
       <div className="overflow-x-auto mx-2">
-        <table className="table table-zebra w-full table-normal">
+        <table className="table table-zebra w-full table-normal text-center">
           <thead>
             <tr>
               <th>#</th>
@@ -103,9 +104,17 @@ const MyAppointment = () => {
                     </Link>
                   )}
                   {a?.price && a?.paid && (
-                    <span className=" py-[2px] px-2 rounded-md uppercase btn-success text-white text-sm tracking-wide">
-                      Paid
-                    </span>
+                    <div>
+                      <p>
+                        Transition Id:{' '}
+                        <span className="py-[2px] px-2 text-secondary text-sm">
+                          {a?.transactionId}
+                        </span>
+                      </p>
+                      <span className=" py-[2px] px-2 rounded-md uppercase btn-success text-white text-sm tracking-wide">
+                        Paid
+                      </span>
+                    </div>
                   )}
                 </td>
               </tr>
